@@ -4,7 +4,7 @@
 #include <fstream>
 
 using namespace std;
-
+//CHANGE
 int main(int argc, char **argv)
 {
   cout << "TODO: implement an Enigma machine" << endl;
