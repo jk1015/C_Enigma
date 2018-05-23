@@ -9,36 +9,32 @@ using namespace std;
 //Error if |v| =/= 26 or v[n] == n or mapping is invalid
 Rotor::Rotor(vector<int>& v)
 {
-  Mapping nullmap;
   this->setNext(&nullmap);
   this->setPrev(&nullmap);
 
   if(v.size() != 26)
   {
-    cerr <<
-    "Rotors must have a mapping for each character"
-    << endl;
-    exit(1);
+    throw invalid_argument("Rotors must have a mapping for each character");
   }
   for(int i = 0; i < 26; i++)
   {
     if(v[i] == i)
     {
-      cerr <<
-      "Rotor mappings must be irreflexive"
-      << endl;
-      exit(1);
+      throw invalid_argument("Rotor mappings must be irreflexive");
     }
     if(v[i] >= 26 || v[i] < 0)
     {
-      cerr <<
-      "Invalid value in rotor mapping, must have f:{0,..,25} -> {0,..,25}"
-      << endl;
-      exit(1);
+      throw invalid_argument("Invalid value in rotor mapping, must have f:{0,..,25} -> {0,..,25}");
+    }
+    if(inverse_config.count(v[i]))
+    {
+      throw invalid_argument("Value mapped to multiple times in Rotor. Rotor mappings must be bijective");
     }
     config[i] = v[i];
     inverse_config[v[i]] = i;
   }
+
+
 
   rotation = 0;
 }
@@ -52,7 +48,7 @@ void Rotor::map(int& value)
 
 void Rotor::invert(int& value)
 {
-  value = (inverse_config[value] - rotation) % 26;
+  value = (26 + inverse_config[value] - rotation) % 26;
   prev->invert(value);
 }
 

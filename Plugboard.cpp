@@ -1,6 +1,7 @@
 #include "Plugboard.hpp"
 #include <vector>
 #include <map>
+#include <string>
 #include <iostream>
 #include <stdlib.h>
 using namespace std;
@@ -12,31 +13,34 @@ Plugboard::Plugboard(vector<int>& v)
   this->setNext(&nullmap);
   this->setPrev(&nullmap);
 
-  for (int i = 0; i < 26; i++)
-  {
-    config[i] = i;
-  }
+
 
   if(v.size() % 2 == 1)
   {
-    cerr <<
-    "Plugboard mappings must contain an even number of values"
-    << endl;
-    exit(1);
+    throw invalid_argument("Plugboard mappings must contain an even number of values");
   }
   for (unsigned i = 0; i < v.size(); i += 2)
   {
     if(v[i] >= 26 || v[i] < 0 || v[i + 1] >= 26 || v[i + 1] < 0)
     {
-      cerr <<
-      "Invalid value in plugboard mapping, must have p:{0,..,25} -> {0,..,25}"
-      << endl;
-      exit(1);
+      throw invalid_argument("Invalid value in plugboard mapping, must have p:{0,..,25} -> {0,..,25}");
+    }
+    //check if key already exists
+    if(config.count(v[i]) || config.count(v[i + 1]))
+    {
+      throw invalid_argument("value mapped multiple times in plugboard");
     }
     config[v[i]] = v[i + 1];
     config[v[i + 1]] = v[i];
   }
 
+  for (int i = 0; i < 26; i++)
+  {
+    if(!config.count(i))
+    {
+      config[i] = i;
+    }
+  }
 }
 
 void Plugboard::map(int& value)

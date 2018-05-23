@@ -4,6 +4,7 @@
 #include <fstream>
 #include <vector>
 #include <stdlib.h>
+#include <stdexcept>
 #include "Mapping.hpp"
 #include "Rotor.hpp"
 #include "Reflector.hpp"
@@ -28,18 +29,36 @@ int main(int argc, char **argv)
 
   if(argc > 1)
   {
-    readFile(argv[argc -1], config);
-
-    Plugboard* plug = new Plugboard(config);
-    maps.push_back(plug);
+    try
+    {
+      readFile(argv[argc -1], config);
+      Plugboard* plug = new Plugboard(config);
+      maps.push_back(plug);
+    }
+    catch (exception& ex)
+    {
+      cerr << "error in " << argv[argc -1] << ex.what() << endl;
+      throw ex;
+    }
+  }
+  else
+  {
+    throw runtime_error("A plugboard mapping must be provided!");
   }
 
   for(int i = 1; i < argc - 1; i++)
   {
-    readFile(argv[i], config);
-
-    Rotor* rotor = new Rotor(config);
-    maps.push_back(rotor);
+    try
+    {
+      readFile(argv[i], config);
+      Rotor* rotor = new Rotor(config);
+      maps.push_back(rotor);
+    }
+    catch (exception& ex)
+    {
+      cerr << "error in " << argv[i] << endl;
+      throw ex;
+    }
   }
 
   Reflector* ref = new Reflector();
@@ -73,8 +92,8 @@ void readFile(char* filename, vector<int>& config)
 
   if(!inFile)
   {
-    cerr << "Unable to open " << filename;
-    exit(1);
+    string msg = "Unable to open ";
+    throw runtime_error(msg + filename);
   }
 
   int buffer;
@@ -92,7 +111,7 @@ void stringToIntVector(string s, vector<int>& v)
   {
     if(!isspace(*it))
     {
-      v.push_back(charToInt(*it));
+        v.push_back(charToInt(*it));
     }
   }
 }
@@ -105,8 +124,10 @@ int charToInt(char c)
 
   if(i < 0 || i > 25)
   {
-    cerr << "Invalid character: \"" << c << "\"" << endl;
-    exit(0);
+    string msg = "Invalid character: \"";
+    msg += c;
+    msg += "\"";
+    throw invalid_argument(msg);
   }
   return i;
 }
