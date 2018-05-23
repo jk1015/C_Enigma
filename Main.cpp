@@ -37,7 +37,8 @@ int main(int argc, char **argv)
     }
     catch (exception& ex)
     {
-      cerr << "error in " << argv[argc -1] << ex.what() << endl;
+      cerr << "error in " << argv[argc -1] << endl
+           << ex.what() << endl;
       throw ex;
     }
   }
@@ -56,7 +57,8 @@ int main(int argc, char **argv)
     }
     catch (exception& ex)
     {
-      cerr << "error in " << argv[i] << endl;
+      cerr << "Error in " << argv[i] << endl
+           << ex.what() << endl;
       throw ex;
     }
   }

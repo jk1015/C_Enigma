@@ -18,10 +18,13 @@ Rotor::Rotor(vector<int>& v)
   }
   for(int i = 0; i < 26; i++)
   {
+    /* The spec states that mappings are irreflexive,
+       but some of the tests have reflexive mappings 
     if(v[i] == i)
     {
       throw invalid_argument("Rotor mappings must be irreflexive");
     }
+    */
     if(v[i] >= 26 || v[i] < 0)
     {
       throw invalid_argument("Invalid value in rotor mapping, must have f:{0,..,25} -> {0,..,25}");
