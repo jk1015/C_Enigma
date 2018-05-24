@@ -69,14 +69,15 @@ int main(int argc, char **argv)
   Machine* m = new Machine(maps);
   vector<int> output;
 
-  string input;
+  char input;
+  int value;
   while(cin >> input)
   {
-    stringToIntVector(input, output);
-    for(unsigned i = 0; i < output.size(); i++)
+    if(!isspace(input))
     {
-      m->map(output[i]);
-      std::cout << intToChar(output[i]);
+      value = charToInt(input);
+      m->map(value);
+      cout << intToChar(value);
     }
   }
 
