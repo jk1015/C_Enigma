@@ -70,15 +70,14 @@ int main(int argc, char **argv)
   vector<int> output;
 
   string input;
-  cin >> input;
-
-  stringToIntVector(input, output);
-
-
-  for(unsigned i = 0; i < output.size(); i++)
+  while(cin >> input)
   {
-    m->map(output[i]);
-    std::cout << intToChar(output[i]);
+    stringToIntVector(input, output);
+    for(unsigned i = 0; i < output.size(); i++)
+    {
+      m->map(output[i]);
+      std::cout << intToChar(output[i]);
+    }
   }
 
   return 0;
