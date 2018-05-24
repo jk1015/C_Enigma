@@ -1,8 +1,6 @@
 #include "Machine.hpp"
 #include "Mapping.hpp"
 #include <vector>
-#include <map>
-#include <iostream>
 using namespace std;
 
 Machine::Machine(vector<Mapping*> maps)
@@ -14,7 +12,6 @@ Machine::Machine(vector<Mapping*> maps)
     current_map = maps[i];
   }
 }
-
 
 void Machine::map(int& value)
 {

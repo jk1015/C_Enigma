@@ -1,9 +1,6 @@
-// skeleton C++ file, you will need to edit this and other files to implement your enigma machine
-#include <stdexcept>
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <stdlib.h>
 #include <stdexcept>
 #include "Mapping.hpp"
 #include "Rotor.hpp"
@@ -14,19 +11,18 @@
 using namespace std;
 
 void readFile(char* filename, vector<int>& config);
-void stringToIntVector(string s, vector<int>& v);
 int charToInt(char c);
 char intToChar(int i);
 //Extract 26 to global
-//Check errors with exceptions and catch to give better error messages
-
+//Create destructors and free everything
+//Rationalise next and prev defaults and resetting
 
 int main(int argc, char **argv)
 {
   vector<Mapping*> maps;
   vector<int> config;
-  string contents;
 
+  //Read plugboard mapping file and construct a plugboard.
   if(argc > 1)
   {
     try
@@ -37,8 +33,10 @@ int main(int argc, char **argv)
     }
     catch (exception& ex)
     {
-      cerr << "error in " << argv[argc -1] << endl
-           << ex.what() << endl;
+      cerr << "--------------------------" << endl
+           << "Error in plugboard file: " << argv[argc -1] << endl
+           << ex.what() << endl
+           << "--------------------------" << endl;
       throw ex;
     }
   }
@@ -47,6 +45,7 @@ int main(int argc, char **argv)
     throw runtime_error("A plugboard mapping must be provided!");
   }
 
+  //Read rotor mapping files and construct a rotor for each.
   for(int i = 1; i < argc - 1; i++)
   {
     try
@@ -57,8 +56,10 @@ int main(int argc, char **argv)
     }
     catch (exception& ex)
     {
-      cerr << "Error in " << argv[i] << endl
-           << ex.what() << endl;
+      cerr << "--------------------------" << endl
+           << "Error in rotor file: " << argv[i] << endl
+           << ex.what() << endl
+           << "--------------------------" << endl;
       throw ex;
     }
   }
@@ -67,8 +68,8 @@ int main(int argc, char **argv)
   maps.push_back(ref);
 
   Machine* m = new Machine(maps);
-  vector<int> output;
 
+  //Read characters from stdin, encode and write result to stdout
   char input;
   int value;
   while(cin >> input)
@@ -80,6 +81,7 @@ int main(int argc, char **argv)
       cout << intToChar(value);
     }
   }
+
 
   return 0;
 }
@@ -103,20 +105,6 @@ void readFile(char* filename, vector<int>& config)
     config.push_back(buffer);
   }
 }
-
-//Transform string to int vector with removed whitespane.
-void stringToIntVector(string s, vector<int>& v)
-{
-  v.clear();
-  for(string::iterator it = s.begin(); it != s.end(); it++)
-  {
-    if(!isspace(*it))
-    {
-        v.push_back(charToInt(*it));
-    }
-  }
-}
-
 
 //Map character to int. Error if not A..Z
 int charToInt(char c)

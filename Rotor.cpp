@@ -14,12 +14,12 @@ Rotor::Rotor(vector<int>& v)
 
   if(v.size() != 26)
   {
-    throw invalid_argument("Rotors must have a mapping for each character");
+    throw invalid_argument("Rotors must have a valid mapping for each character");
   }
   for(int i = 0; i < 26; i++)
   {
-    /* The spec states that mappings are irreflexive,
-       but some of the tests have reflexive mappings
+    /* The spec states that mappings are irreflexive.
+       Some of the tests have reflexive mappings
     if(v[i] == i)
     {
       throw invalid_argument("Rotor mappings must be irreflexive");
@@ -31,7 +31,7 @@ Rotor::Rotor(vector<int>& v)
     }
     if(inverse_config.count(v[i]))
     {
-      throw invalid_argument("Value mapped to multiple times in Rotor. Rotor mappings must be bijective");
+      throw invalid_argument("Value mapped to multiple times by Rotor. Rotor mappings must be bijective");
     }
     config[i] = v[i];
     inverse_config[v[i]] = i;
