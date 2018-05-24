@@ -12,13 +12,8 @@ class Plugboard: public Mapping
     Plugboard(vector<int>& v);
     void map(int& value);
     void invert(int& value);
-    void rotate();
-  protected:
-    void resetNext();
-    void resetPrev();
   private:
     std::map<int, int> config;
-    Mapping nullmap;
 };
 
 #endif

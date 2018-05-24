@@ -9,12 +9,6 @@ class Reflector: public Mapping
     Reflector();
     void map(int& value);
     void invert(int& value);
-    void rotate() {};
-  protected:
-    void resetNext();
-    void resetPrev();
-  private:
-    Mapping nullmap;
 };
 
 #endif

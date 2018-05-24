@@ -9,9 +9,6 @@ using namespace std;
 //Error if |v| =/= 26 or v[n] == n or mapping is invalid
 Rotor::Rotor(vector<int>& v)
 {
-  this->setNext(&nullmap);
-  this->setPrev(&nullmap);
-
   if(v.size() != 26)
   {
     throw invalid_argument("Rotors must have a valid mapping for each character");
@@ -43,31 +40,16 @@ Rotor::Rotor(vector<int>& v)
 //
 void Rotor::map(int& value)
 {
-  value =  (26 + config[(value + rotation) % 26] - rotation) % 26;
-  next->map(value);
+  value = (26 + config[(value + rotation) % 26] - rotation) % 26;
 }
 
 void Rotor::invert(int& value)
 {
   value = (26 + inverse_config[(value + rotation) % 26] - rotation) % 26;
-  prev->invert(value);
 }
 
-void Rotor::rotate()
+bool Rotor::rotate()
 {
   rotation = (rotation + 1) % 26;
-  if(rotation == 0)
-  {
-    next->rotate();
-  }
-}
-
-void Rotor::resetNext()
-{
-  this->setNext(&nullmap);
-}
-
-void Rotor::resetPrev()
-{
-  this->setPrev(&nullmap);
+  return rotation == 0;
 }

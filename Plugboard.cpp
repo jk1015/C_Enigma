@@ -10,9 +10,6 @@ using namespace std;
 //Error if |v| is not even or mapping is invalid
 Plugboard::Plugboard(vector<int>& v)
 {
-  this->setNext(&nullmap);
-  this->setPrev(&nullmap);
-
   if(v.size() % 2 == 1)
   {
     throw invalid_argument("Plugboard mappings must contain an even number of values");
@@ -44,26 +41,9 @@ Plugboard::Plugboard(vector<int>& v)
 void Plugboard::map(int& value)
 {
   value = config[value];
-  next->map(value);
 }
 
 void Plugboard::invert(int& value)
 {
-  value = config[value];
-  prev->invert(value);
-}
-
-void Plugboard::rotate()
-{
-  next->rotate();
-}
-
-void Plugboard::resetNext()
-{
-  this->next = &nullmap;
-}
-
-void Plugboard::resetPrev()
-{
-  this->prev = &nullmap;
+  map(value);
 }

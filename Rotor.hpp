@@ -12,15 +12,11 @@ class Rotor: public Mapping
     Rotor (vector<int>& v);
     void map(int& value);
     void invert(int& value);
-    void rotate();
-  protected:
-    void resetNext();
-    void resetPrev();
+    bool rotate();
   private:
     std::map<int, int> config;
     std::map<int, int> inverse_config;
     int rotation;
-    Mapping nullmap;
 };
 
 #endif

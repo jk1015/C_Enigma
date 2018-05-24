@@ -12,7 +12,6 @@ class Machine: public Mapping
     Machine(vector<Mapping*> maps);
     void map(int& value);
     void invert(int& value) {};
-    void rotate() {};
 };
 
 #endif

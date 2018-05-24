@@ -13,9 +13,8 @@ using namespace std;
 void readFile(char* filename, vector<int>& config);
 int charToInt(char c);
 char intToChar(int i);
-//Extract 26 to global
 //Create destructors and free everything
-//Rationalise next and prev defaults and resetting
+//Rationalise make file and file structure
 
 int main(int argc, char **argv)
 {
@@ -45,6 +44,7 @@ int main(int argc, char **argv)
     throw runtime_error("A plugboard mapping must be provided!");
   }
 
+
   //Read rotor mapping files and construct a rotor for each.
   for(int i = 1; i < argc - 1; i++)
   {
@@ -64,10 +64,11 @@ int main(int argc, char **argv)
     }
   }
 
+
   Reflector* ref = new Reflector();
   maps.push_back(ref);
-
   Machine* m = new Machine(maps);
+
 
   //Read characters from stdin, encode and write result to stdout
   char input;

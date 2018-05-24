@@ -1,10 +1,12 @@
 #include "Machine.hpp"
+#include <iostream>
 #include "Mapping.hpp"
 #include <vector>
 using namespace std;
 
 Machine::Machine(vector<Mapping*> maps)
 {
+
   Mapping* current_map = this;
   for (unsigned i = 0; i < maps.size(); i++)
   {
@@ -15,6 +17,6 @@ Machine::Machine(vector<Mapping*> maps)
 
 void Machine::map(int& value)
 {
-  next->map(value);
-  next->rotate();
+  next->conjugateMap(value);
+  next->conjugateRotate();
 }
