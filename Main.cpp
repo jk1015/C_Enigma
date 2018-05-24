@@ -80,7 +80,6 @@ int main(int argc, char **argv)
     m->map(output[i]);
     std::cout << intToChar(output[i]);
   }
-  cout << endl;
 
   return 0;
 }

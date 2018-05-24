@@ -19,7 +19,7 @@ Rotor::Rotor(vector<int>& v)
   for(int i = 0; i < 26; i++)
   {
     /* The spec states that mappings are irreflexive,
-       but some of the tests have reflexive mappings 
+       but some of the tests have reflexive mappings
     if(v[i] == i)
     {
       throw invalid_argument("Rotor mappings must be irreflexive");
@@ -37,21 +37,19 @@ Rotor::Rotor(vector<int>& v)
     inverse_config[v[i]] = i;
   }
 
-
-
   rotation = 0;
 }
 
 //
 void Rotor::map(int& value)
 {
-  value = config[(value + rotation) % 26];
+  value =  (26 + config[(value + rotation) % 26] - rotation) % 26;
   next->map(value);
 }
 
 void Rotor::invert(int& value)
 {
-  value = (26 + inverse_config[value] - rotation) % 26;
+  value = (26 + inverse_config[(value + rotation) % 26] - rotation) % 26;
   prev->invert(value);
 }
 
