@@ -69,7 +69,6 @@ int main(int argc, char **argv)
   maps.push_back(ref);
   Machine* m = new Machine(maps);
 
-
   //Read characters from stdin, encode and write result to stdout
   char input;
   int value;
@@ -82,7 +81,12 @@ int main(int argc, char **argv)
       cout << intToChar(value);
     }
   }
-
+  
+  delete m;
+  for(unsigned i = 0 ; i < maps.size(); i++)
+  {
+    delete maps[i];
+  }
 
   return 0;
 }

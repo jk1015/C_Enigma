@@ -9,8 +9,8 @@ Mapping::Mapping()
 
 Mapping::~Mapping()
 {
-  prev->resetNext();
-  next->resetPrev();
+  resetNext();
+  resetPrev();
 }
 
 bool Mapping::rotate()
@@ -50,18 +50,11 @@ void Mapping::conjugateRotate()
 
 void Mapping::setNext(Mapping* next)
 {
-  if(this->hasNext)
-  {
-    resetNext();
-  }
-
+  this->resetNext();
   this->next = next;
   this->hasNext = true;
 
-  if(next->hasPrev)
-  {
-    next->resetPrev();
-  }
+  next->resetPrev();
   next->prev = this;
   next->hasPrev = true;
 }
